@@ -1,0 +1,5 @@
+{
+  "/page": "app/page.js",
+  "/api/cartola/status/route": "app/api/cartola/status/route.js",
+  "/api/cartola/pontuados/route": "app/api/cartola/pontuados/route.js"
+}
