@@ -3,7 +3,7 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCartolaStore } from "@/lib/store/useCartolaStore";
 
-type ViewMode = "list" | "field";
+
 
 export function ViewModeToggle() {
   const viewMode = useCartolaStore((state) => state.viewMode);

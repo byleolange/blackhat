@@ -29,9 +29,42 @@ export type CartolaPontuadosResponse = {
   clubes?: Record<string, CartolaClube>;
 };
 
+export type CartolaMercadoAtleta = {
+  atleta_id: number;
+  apelido?: string;
+  nome?: string;
+  posicao_id?: number;
+  clube_id?: number;
+  jogos_num?: number;
+  entrou_em_campo?: boolean;
+};
+
+export type CartolaAtletasMercadoResponse = {
+  atletas: CartolaMercadoAtleta[];
+};
+
+export type CartolaRodada = {
+  rodada_id: number;
+  nome?: string;
+  inicio?: string;
+  fim?: string;
+  status?: number;
+};
+
+export type CartolaPontuadoRodada = {
+  scout?: Record<string, number>;
+  pontuacao?: number | null;
+  jogou?: boolean;
+};
+
+export type CartolaPontuadosByRodadaResponse = {
+  atletas: Record<string, CartolaPontuadoRodada>;
+};
+
 export type CartolaStatusResponse = {
   rodada_atual: number;
   status_mercado?: number;
+  bola_rolando?: boolean;
 };
 
 export type CartolaClube = {

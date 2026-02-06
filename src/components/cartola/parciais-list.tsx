@@ -1,3 +1,8 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { CartolaClube, CartolaPontuado } from "@/lib/cartola/types";
 
@@ -10,7 +15,20 @@ type ParciaisListProps = {
   clubes: Record<string, CartolaClube>;
 };
 
+function buildPlayerHref(atleta: CartolaPontuado) {
+  const params = new URLSearchParams();
+  if (atleta.apelido) params.set("apelido", atleta.apelido);
+  if (atleta.clube_id) params.set("clube_id", String(atleta.clube_id));
+  if (atleta.posicao_id) params.set("posicao_id", String(atleta.posicao_id));
+  const query = params.toString();
+  return query
+    ? `/jogador/${atleta.atleta_id}?${query}`
+    : `/jogador/${atleta.atleta_id}`;
+}
+
 export function ParciaisList({ atletas, clubes }: ParciaisListProps) {
+  const router = useRouter();
+
   return (
     <Card>
       <CardHeader>
@@ -25,10 +43,19 @@ export function ParciaisList({ atletas, clubes }: ParciaisListProps) {
             clube?.escudos?.["60x60"] ||
             null;
 
+          const href = buildPlayerHref(atleta);
+
           return (
-            <div
+            <Link
               key={atleta.atleta_id}
-              className="flex flex-col gap-3 rounded-md border px-3 py-2 sm:flex-row sm:items-center sm:justify-between"
+              href={href}
+              prefetch={true}
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(href);
+              }}
+              aria-label={`Abrir detalhes de ${atleta.apelido}`}
+              className="flex w-full flex-col gap-3 rounded-md border px-3 py-2 text-left transition hover:border-foreground/40 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="flex min-w-0 items-center gap-3">
                 {escudo ? (
@@ -44,12 +71,12 @@ export function ParciaisList({ atletas, clubes }: ParciaisListProps) {
                   </div>
                 )}
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium">
+                  <span className="block truncate text-sm font-medium">
                     {atleta.apelido}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
+                  </span>
+                  <span className="block text-xs text-muted-foreground">
                     Pos. {atleta.posicao_id} • Clube {atleta.clube_id}
-                  </p>
+                  </span>
                 </div>
               </div>
               <span
@@ -64,7 +91,7 @@ export function ParciaisList({ atletas, clubes }: ParciaisListProps) {
               >
                 {formatPoints(atleta.pontuacao)}
               </span>
-            </div>
+            </Link>
           );
         })}
       </CardContent>

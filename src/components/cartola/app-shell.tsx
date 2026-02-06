@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
 import { useCartolaData } from "@/hooks/use-cartola-data";
+import { useParticipacoes } from "@/hooks/use-participacoes";
 import { useStandalone } from "@/hooks/use-standalone";
 import { mergeTeamWithPontuados, computeTeamTotal } from "@/lib/cartola/merge";
 import { useCartolaStore } from "@/lib/store/useCartolaStore";
@@ -59,9 +60,19 @@ export function AppShell() {
   const total = computeTeamTotal(merged);
 
   const parciaisList = pontuados
-    ? Object.values(pontuados.atletas).sort((a, b) => b.pontuacao - a.pontuacao)
+    ? Object.entries(pontuados.atletas)
+        .map(([id, atleta]) => ({
+          ...atleta,
+          atleta_id: Number(id)
+        }))
+        .sort((a, b) => b.pontuacao - a.pontuacao)
     : [];
   const clubes = pontuados?.clubes ?? {};
+  const atletaIds = React.useMemo(
+    () => sortedTeam.map((atleta) => atleta.atleta_id),
+    [sortedTeam]
+  );
+  const participacoes = useParticipacoes(atletaIds, status?.rodada_atual);
 
   return (
     <main className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-8">
@@ -133,7 +144,14 @@ export function AppShell() {
                   (isHydrated ? viewMode : "list") === "field" ? (
                     <TeamFieldView atletas={merged} />
                   ) : (
-                    <TeamListView atletas={sortedTeam} clubes={clubes} />
+                    <TeamListView
+                      atletas={sortedTeam}
+                      clubes={clubes}
+                      participacoes={participacoes.data}
+                      participacoesLoading={
+                        participacoes.loading || participacoes.partial
+                      }
+                    />
                   )
                 ) : (
                   <EmptyState

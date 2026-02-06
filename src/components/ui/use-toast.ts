@@ -20,21 +20,21 @@ type State = {
 
 type Action =
   | {
-      type: "ADD_TOAST";
-      toast: ToasterToast;
-    }
+    type: "ADD_TOAST";
+    toast: ToasterToast;
+  }
   | {
-      type: "UPDATE_TOAST";
-      toast: Partial<ToasterToast>;
-    }
+    type: "UPDATE_TOAST";
+    toast: Partial<ToasterToast>;
+  }
   | {
-      type: "DISMISS_TOAST";
-      toastId?: ToasterToast["id"];
-    }
+    type: "DISMISS_TOAST";
+    toastId?: ToasterToast["id"];
+  }
   | {
-      type: "REMOVE_TOAST";
-      toastId?: ToasterToast["id"];
-    };
+    type: "REMOVE_TOAST";
+    toastId?: ToasterToast["id"];
+  };
 
 let count = 0;
 
@@ -45,7 +45,7 @@ function genId() {
 
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
-const addToRemoveQueue = (toastId: string) => {
+const _addToRemoveQueue = (toastId: string) => {
   if (toastTimeouts.has(toastId)) {
     return;
   }

@@ -25,8 +25,8 @@ export function useCartolaData(slug: string | null) {
     try {
       const teamPromise = slug
         ? fetch(`/api/cartola/time?slug=${encodeURIComponent(slug)}`, {
-            cache: "no-store"
-          })
+          cache: "no-store"
+        })
         : Promise.resolve(null);
       const [teamRes, pontuadosRes, statusRes] = await Promise.all([
         teamPromise,
@@ -60,7 +60,9 @@ export function useCartolaData(slug: string | null) {
   }, [slug, setLastUpdated]);
 
   React.useEffect(() => {
-    void fetchAll();
+    fetchAll().catch((err) => {
+      console.error("Erro ao buscar dados do Cartola:", err);
+    });
   }, [fetchAll]);
 
   return {
