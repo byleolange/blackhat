@@ -5,9 +5,9 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: "Black Hat (Minimal Cartola)",
+  title: "Chapeleta (Minimal Cartola)",
   description: "Acompanhe seu time do Cartola em tempo real, sem distrações.",
-  applicationName: "Black Hat (Minimal Cartola)",
+  applicationName: "Chapeleta (Minimal Cartola)",
   manifest: "/manifest.webmanifest"
 };
 

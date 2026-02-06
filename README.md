@@ -1,4 +1,4 @@
-# Black Hat (Minimal Cartola) 🎯
+# Chapeleta (Minimal Cartola) 🎯
 
 > Acompanhe seu time do Cartola em tempo real, sem distrações.
 
@@ -8,7 +8,7 @@
 
 ## 📋 Sobre
 
-Black Hat é um aplicativo minimalista e não-oficial para acompanhar as parciais do Cartola FC. Focado em performance e simplicidade, oferece:
+Chapeleta é um aplicativo minimalista e não-oficial para acompanhar as parciais do Cartola FC. Focado em performance e simplicidade, oferece:
 
 - **Meu Time**: Parciais apenas dos seus atletas
 - **Parciais Gerais**: Lista completa de atletas pontuados

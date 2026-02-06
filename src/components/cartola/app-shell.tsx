@@ -88,7 +88,7 @@ export function AppShell() {
           <div className="flex w-full justify-center">
             <Image
               src="/logotipo.png"
-              alt="Logotipo Black Hat"
+              alt="Logotipo Chapeleta"
               width={180}
               height={64}
               priority

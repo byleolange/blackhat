@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Black Hat (Minimal Cartola)",
-    short_name: "Black Hat",
+    name: "Chapeleta (Minimal Cartola)",
+    short_name: "Chapeleta",
     description: "Acompanhe seu time do Cartola em tempo real, sem distrações.",
     start_url: "/",
     display: "standalone",

@@ -1,7 +1,7 @@
 # 📋 Relatório de Correções Implementadas
 
 **Data**: 05/02/2026  
-**Projeto**: Black Hat (Minimal Cartola)  
+**Projeto**: Chapeleta (Minimal Cartola)  
 **Status**: ✅ Todas as correções implementadas com sucesso
 
 ---
