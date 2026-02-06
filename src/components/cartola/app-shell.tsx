@@ -61,11 +61,11 @@ export function AppShell() {
 
   const parciaisList = pontuados
     ? Object.entries(pontuados.atletas)
-        .map(([id, atleta]) => ({
-          ...atleta,
-          atleta_id: Number(id)
-        }))
-        .sort((a, b) => b.pontuacao - a.pontuacao)
+      .map(([id, atleta]) => ({
+        ...atleta,
+        atleta_id: Number(id)
+      }))
+      .sort((a, b) => b.pontuacao - a.pontuacao)
     : [];
   const clubes = pontuados?.clubes ?? {};
   const atletaIds = React.useMemo(
@@ -148,9 +148,7 @@ export function AppShell() {
                       atletas={sortedTeam}
                       clubes={clubes}
                       participacoes={participacoes.data}
-                      participacoesLoading={
-                        participacoes.loading || participacoes.partial
-                      }
+                      participacoesLoading={participacoes.loading}
                     />
                   )
                 ) : (
