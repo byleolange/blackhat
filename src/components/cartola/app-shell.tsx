@@ -49,14 +49,21 @@ export function AppShell() {
     }
   }, [error]);
 
-  const merged = team && pontuados ? mergeTeamWithPontuados(team, pontuados) : [];
-  const sortedTeam = merged
-    .slice()
-    .sort(
-      (a, b) =>
-        (b.pontuacao_final ?? b.pontuacao ?? -999) -
-        (a.pontuacao_final ?? a.pontuacao ?? -999)
-    );
+  const merged = React.useMemo(
+    () => (team && pontuados ? mergeTeamWithPontuados(team, pontuados) : []),
+    [team, pontuados]
+  );
+  const sortedTeam = React.useMemo(
+    () =>
+      merged
+        .slice()
+        .sort(
+          (a, b) =>
+            (b.pontuacao_final ?? b.pontuacao ?? -999) -
+            (a.pontuacao_final ?? a.pontuacao ?? -999)
+        ),
+    [merged]
+  );
   const total = computeTeamTotal(merged);
 
   const parciaisList = pontuados
