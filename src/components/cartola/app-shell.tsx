@@ -76,14 +76,8 @@ export function AppShell() {
               priority
             />
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold">Black Hat</h1>
-              <p className="text-sm text-muted-foreground">
-                Acompanhe seu time sem distrações.
-              </p>
-            </div>
-            {isStandalone ? (
+          {isStandalone ? (
+            <div className="flex w-full justify-center sm:justify-end">
               <Button
                 variant="outline"
                 size="sm"
@@ -93,8 +87,8 @@ export function AppShell() {
                 <ExternalLink className="mr-2 h-4 w-4" />
                 Abrir no navegador
               </Button>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
         </header>
 
         <Tabs defaultValue="meu-time">
