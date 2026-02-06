@@ -71,3 +71,22 @@ export function getPositionShort(posicaoId?: number) {
       return "POS";
   }
 }
+
+export function getPositionName(posicaoId?: number) {
+  switch (posicaoId) {
+    case 1:
+      return "Goleiro";
+    case 2:
+      return "Lateral";
+    case 3:
+      return "Zagueiro";
+    case 4:
+      return "Meio-Campo";
+    case 5:
+      return "Atacante";
+    case 6:
+      return "Técnico";
+    default:
+      return "Posição";
+  }
+}

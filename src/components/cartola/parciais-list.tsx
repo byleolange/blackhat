@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { CartolaClube, CartolaPontuado } from "@/lib/cartola/types";
+import { getPositionName } from "@/lib/positions";
 
 function formatPoints(points: number) {
   return points.toFixed(2).replace(".", ",");
@@ -45,6 +46,9 @@ export function ParciaisList({ atletas, clubes }: ParciaisListProps) {
 
           const href = buildPlayerHref(atleta);
 
+          const posicaoNome = getPositionName(atleta.posicao_id);
+          const clubeNome = clube?.nome || `Clube ${atleta.clube_id}`;
+
           return (
             <Link
               key={atleta.atleta_id}
@@ -75,7 +79,7 @@ export function ParciaisList({ atletas, clubes }: ParciaisListProps) {
                     {atleta.apelido}
                   </span>
                   <span className="block text-xs text-muted-foreground">
-                    Pos. {atleta.posicao_id} • Clube {atleta.clube_id}
+                    Pos: {posicaoNome} • Clube: {clubeNome}
                   </span>
                 </div>
               </div>

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatPoints } from "@/lib/format";
 import type { CartolaClube, MergedAtleta } from "@/lib/cartola/types";
+import { getPositionName } from "@/lib/positions";
 
 type TeamListViewProps = {
   atletas: MergedAtleta[];
@@ -50,6 +51,14 @@ export function TeamListView({
 
           const href = buildPlayerHref(atleta);
 
+          const posicaoNome = getPositionName(atleta.posicao_id);
+          const clubeNome = clube?.nome || (atleta.clube_id ? `Clube ${atleta.clube_id}` : "");
+
+          // Build the info line with position, club, and optional badges
+          const infoParts: string[] = [];
+          if (posicaoNome) infoParts.push(`Pos: ${posicaoNome}`);
+          if (clubeNome) infoParts.push(`Clube: ${clubeNome}`);
+
           return (
             <Link
               key={atleta.atleta_id}
@@ -60,7 +69,7 @@ export function TeamListView({
                 router.push(href);
               }}
               aria-label={`Abrir detalhes de ${atleta.apelido}`}
-              className="flex w-full items-center justify-between gap-3 rounded-md border px-3 py-2 text-left transition hover:border-foreground/40"
+              className="flex w-full flex-col gap-3 rounded-md border px-3 py-2 text-left transition hover:border-foreground/40 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="flex min-w-0 items-center gap-3">
                 {escudo ? (
@@ -75,35 +84,42 @@ export function TeamListView({
                     {clube?.abreviacao ?? "?"}
                   </div>
                 )}
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="flex min-w-0 items-center gap-2">
                     <span className="block truncate text-sm font-medium">
                       {atleta.apelido}
                     </span>
-                    <Badge
-                      variant="secondary"
-                      className="shrink-0 whitespace-nowrap px-2 py-0 text-[10px] sm:text-xs"
-                    >
-                      Part.:{" "}
-                      {participacoesLoading
-                        ? "—"
-                        : participacoes?.[atleta.atleta_id] ?? "—"}
-                    </Badge>
-                    {atleta.isCapitao ? (
+                    {atleta.isCapitao && (
                       <Badge
                         variant="secondary"
-                        className="shrink-0 whitespace-nowrap px-2 py-0 text-[10px] sm:text-xs"
+                        className="shrink-0 whitespace-nowrap px-2 py-0 text-[10px]"
                       >
-                        <span className="hidden max-[400px]:inline">C</span>
-                        <span className="max-[400px]:hidden">
-                          Capitão 1,5x
-                        </span>
+                        C
                       </Badge>
-                    ) : null}
+                    )}
+                  </div>
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="block truncate text-xs text-muted-foreground">
+                      {infoParts.join(" • ")}
+                      {participacoes !== undefined && participacoes !== null && (
+                        <>
+                          {" • "}Part: {participacoesLoading ? "—" : participacoes[atleta.atleta_id] ?? "—"}
+                        </>
+                      )}
+                    </span>
                   </div>
                 </div>
               </div>
-              <span className="shrink-0 text-sm font-semibold">
+              <span
+                className={[
+                  "self-end text-sm font-semibold sm:self-auto",
+                  (atleta.pontuacao_final ?? atleta.pontuacao ?? 0) > 0
+                    ? "text-emerald-600"
+                    : (atleta.pontuacao_final ?? atleta.pontuacao ?? 0) < 0
+                      ? "text-rose-600"
+                      : "text-foreground"
+                ].join(" ")}
+              >
                 {formatPoints(atleta.pontuacao_final ?? atleta.pontuacao)}
               </span>
             </Link>
